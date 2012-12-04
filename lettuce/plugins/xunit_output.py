@@ -63,10 +63,10 @@ def enable(filename=None):
             tc.appendChild(skip)
 
         if step.failed:
-            cdata = doc.createCDATASection(step.why.traceback)
+            cdata = doc.createCDATASection(step.why.traceback.decode('utf-8'))
             failure = doc.createElement("failure")
             if hasattr(step.why, 'cause'):
-                failure.setAttribute("message", step.why.cause)
+                failure.setAttribute("message", step.why.cause.decode('utf-8'))
             failure.setAttribute("type", step.why.exception.__class__.__name__)
             failure.appendChild(cdata)
             tc.appendChild(failure)
@@ -87,9 +87,9 @@ def enable(filename=None):
         tc.setAttribute("time", str(total_seconds((datetime.now() - scenario.outline_started))))
 
         for reason_to_fail in reasons_to_fail:
-            cdata = doc.createCDATASection(reason_to_fail.traceback)
+            cdata = doc.createCDATASection(reason_to_fail.traceback.decode('utf-8'))
             failure = doc.createElement("failure")
-            failure.setAttribute("message", reason_to_fail.cause)
+            failure.setAttribute("message", reason_to_fail.cause.decode('utf-8'))
             failure.appendChild(cdata)
             tc.appendChild(failure)
 
